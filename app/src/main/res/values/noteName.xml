@@ -2,5 +2,10 @@
 <resources>
     <string-array name="nameNotes">
         <item>Название заметки</item>
+        <item>Название второй заметки</item>
     </string-array>
+
+    <integer-array name="image_note">
+        <item>@drawable/recording</item>
+    </integer-array>
 </resources>
