@@ -1,8 +1,9 @@
 package com.example.notes_app;
 
+import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
@@ -14,12 +15,15 @@ import android.widget.TextView;
 
 public class NotesListFragment extends Fragment {
 
-    public static NotesListFragment newInstance(String param1, String param2) {
-        NotesListFragment fragment = new NotesListFragment();
-        Bundle args = new Bundle();
-        //args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
+    private boolean isLandscape;
+
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        if (isLandscape) {
+            showLand(0);
+        }
     }
 
     @Override
@@ -39,16 +43,39 @@ public class NotesListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        createTextViewList((LinearLayout)view);
+        createTextViewList((LinearLayout) view);
     }
 
     private void createTextViewList(LinearLayout linearLayout) {
         String[] notes = getResources().getStringArray(R.array.nameNotes);
-        for(int i = 0; i < notes.length; i++){
+        for (int i = 0; i < notes.length; i++) {
             TextView textView = new TextView(getContext());
             textView.setText(notes[i]);
-            textView.setTextSize(35);
+            int finalI = i;
+            textView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (isLandscape) {
+                        showLand(finalI);
+
+                    } else {
+                        Intent intent = new Intent(getActivity(), PortImageNotes.class);
+                        intent.putExtra(ImageNotes.KEY_INDEX, finalI);
+                        startActivity(intent);
+                    }
+                }
+            });
+            textView.setTextSize(25);
             linearLayout.addView(textView);
         }
+
+
     }
+
+    private void showLand(int index) {
+        ImageNotes imageNotes = ImageNotes.newInstance(index);
+        getActivity().getSupportFragmentManager().beginTransaction().replace(
+                R.id.fragment_container_land, imageNotes).commit();
+    }
+
 }

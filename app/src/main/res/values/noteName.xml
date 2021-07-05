@@ -6,6 +6,7 @@
     </string-array>
 
     <integer-array name="image_note">
+        <item>@drawable/create_note</item>
         <item>@drawable/recording</item>
     </integer-array>
 </resources>

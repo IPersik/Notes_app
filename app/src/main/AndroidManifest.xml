@@ -9,10 +9,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.Notes_app">
-        <activity
-            android:name=".NotesListFragmentPort"
-            android:label="@string/title_activity_notes_list_fragment_port"
-            android:theme="@style/Theme.Notes_app.NoActionBar"></activity>
+        <activity android:name=".PortImageNotes"></activity>
         <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
