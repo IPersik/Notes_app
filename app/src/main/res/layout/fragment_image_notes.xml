@@ -6,7 +6,7 @@
     android:orientation="horizontal"
     tools:context=".ImageNotes">
 
-    <ImageView
+    <TextView
         android:id="@+id/image_of_notes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

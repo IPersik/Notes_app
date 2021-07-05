@@ -9,6 +9,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 
 public class ImageNotes extends Fragment {
@@ -40,9 +41,9 @@ public class ImageNotes extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_image_notes, container, false);
-        ImageView imageView = view.findViewById(R.id.image_of_notes);
-        TypedArray images = (getResources().obtainTypedArray(R.array.image_note));
-        imageView.setImageResource(images.getResourceId(index, -1));
+        TextView textView = view.findViewById(R.id.image_of_notes);
+        String [] textNote = getResources().getStringArray(R.array.textNotes);
+        textView.setText(textNote[index]);
         return view;
     }
 }

@@ -3,6 +3,19 @@
     <string-array name="nameNotes">
         <item>Название заметки</item>
         <item>Название второй заметки</item>
+        <item>Название третьей заметки</item>
+        <item>Название четвертой заметки</item>
+        <item>Название пятой заметки</item>
+        <item>Название шестой заметки</item>
+    </string-array>
+
+    <string-array name="textNotes">
+        <item>Описание заметки</item>
+        <item>Описание второй заметки</item>
+        <item>Описание третьей заметки</item>
+        <item>Описание четвертой заметки</item>
+        <item>Описание пятой заметки</item>
+        <item>Описание шестой заметки</item>
     </string-array>
 
     <integer-array name="image_note">
