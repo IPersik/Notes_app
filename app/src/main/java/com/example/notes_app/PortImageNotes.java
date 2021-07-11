@@ -8,7 +8,7 @@ import android.os.Bundle;
 public class PortImageNotes extends AppCompatActivity {
 
 
-    @Override
+    /*@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_port_image_notes);
@@ -22,5 +22,5 @@ public class PortImageNotes extends AppCompatActivity {
             imageNotes.setArguments(getIntent().getExtras());
             getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, imageNotes).commit();
         }
-    }
+    } */
 }

@@ -6,32 +6,28 @@ import android.os.Bundle;
 
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.Objects;
 
 public class NotesListFragment extends Fragment {
 
     private boolean isLandscape;
 
-    @Override
-    public void onActivityCreated(Bundle savedInstanceState) {
-        super.onActivityCreated(savedInstanceState);
-        isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
-        if (isLandscape) {
-            showLand(0);
-        }
-    }
-
-    @Override
+    /*@Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
         }
-    }
+    }*/
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -43,39 +39,56 @@ public class NotesListFragment extends Fragment {
     @Override
     public void onViewCreated(View view, Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        createTextViewList((LinearLayout) view);
+        createTextViewList(view);
     }
 
-    private void createTextViewList(LinearLayout linearLayout) {
+    private void createTextViewList(View view) {
+        LinearLayout linearView = (LinearLayout) view;
         String[] notes = getResources().getStringArray(R.array.nameNotes);
         for (int i = 0; i < notes.length; i++) {
             TextView textView = new TextView(getContext());
             textView.setText(notes[i]);
-            int finalI = i;
+            textView.setTextSize(30);
+            linearView.addView(textView);
+            final int finalI = i;
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (isLandscape) {
-                        showLand(finalI);
-
-                    } else {
-                        Intent intent = new Intent(getActivity(), PortImageNotes.class);
-                        intent.putExtra(ImageNotes.KEY_INDEX, finalI);
-                        startActivity(intent);
-                    }
+                    ((MainActivity)getActivity()).currentNote = new ImageNotes(finalI);
+                    showNoteDescription(((MainActivity)getActivity()).currentNote);
                 }
             });
-            textView.setTextSize(25);
-            linearLayout.addView(textView);
         }
-
-
+    }
+    @Override
+    public void onActivityCreated(Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        isLandscape = getResources().getConfiguration().orientation == Configuration.ORIENTATION_LANDSCAPE;
+        if (isLandscape) {
+            showLandNoteDescription(((MainActivity) requireActivity()).currentNote);
+        }
     }
 
-    private void showLand(int index) {
-        ImageNotes imageNotes = ImageNotes.newInstance(index);
-        getActivity().getSupportFragmentManager().beginTransaction().replace(
-                R.id.fragment_container_land, imageNotes).commit();
+    private void showNoteDescription(ImageNotes currentNote){
+        if (isLandscape) {
+            showLandNoteDescription(currentNote);
+
+        } else {
+            showPortNoteDescription(currentNote);
+        }
+    }
+
+    private void showPortNoteDescription(ImageNotes currentNote) {
+        Toast.makeText(getActivity()," Выбрана заметка "+currentNote.getNoteName(getActivity()),Toast.LENGTH_SHORT).show();
+    }
+
+    private void showLandNoteDescription(ImageNotes currentNote) {
+        NoteDescriptionFragment detail = NoteDescriptionFragment.newInstance(currentNote);
+
+        FragmentManager fragmentManager = requireActivity().getSupportFragmentManager();
+        FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE);
+        fragmentTransaction.commit();
     }
 
 }

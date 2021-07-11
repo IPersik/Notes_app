@@ -1,51 +1,89 @@
 package com.example.notes_app;
 
+import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
 
+import android.os.Parcel;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
 
-public class ImageNotes extends Fragment {
+public class ImageNotes extends Fragment implements Parcelable {
 
-    public static final String KEY_INDEX = "index";
-    private int index;
+    private int noteIndex;
 
-    public ImageNotes() {
-        // Required empty public constructor
+    private static final String KEY_NOTE_YEAR= "key_note_year_";
+    private static final String KEY_NOTE_MONTH= "key_note_monthOfYear_";
+    private static final String KEY_NOTE_DAY= "";
+    private static final String KEY_PREF= "note_date";
+
+    public ImageNotes(int contentIndex) {
+        this.noteIndex = contentIndex;
     }
 
-    public static ImageNotes newInstance(int index) {
-        ImageNotes fragment = new ImageNotes();
-        Bundle args = new Bundle();
-        args.putInt(KEY_INDEX, index);
-        fragment.setArguments(args);
-        return fragment;
+    public int getNoteIndex(){
+        return noteIndex;
     }
 
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            index = getArguments().getInt(KEY_INDEX);
+    public String getNoteName(Context mContext) {
+        return mContext.getResources().getStringArray(R.array.nameNotes)[noteIndex];
+    }
+
+    public String getNoteBody(Context mContext) {
+        return mContext.getResources().getStringArray(R.array.textNotes)[noteIndex];
+    }
+
+    public int getNoteDateYear(Context mContext) {
+        SharedPreferences sp = mContext.getApplicationContext().getSharedPreferences(KEY_PREF, Context.MODE_PRIVATE);
+        return sp.getInt(KEY_NOTE_YEAR+noteIndex, -1);
+    }
+    public int getNoteDateMonth(Context mContext) {
+        SharedPreferences sp = mContext.getApplicationContext().getSharedPreferences(KEY_PREF, Context.MODE_PRIVATE);
+        return sp.getInt(KEY_NOTE_MONTH+noteIndex, -1);
+    }
+    public int getNoteDateDay(Context mContext) {
+        SharedPreferences sp = mContext.getApplicationContext().getSharedPreferences(KEY_PREF, Context.MODE_PRIVATE);
+        return sp.getInt(KEY_NOTE_DAY+noteIndex, -1);
+    }
+
+    public void setNoteDate(Context mContext, int year, int monthOfYear, int dayOfMonth) {
+        SharedPreferences sp = mContext.getApplicationContext().getSharedPreferences(KEY_PREF, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sp.edit();
+        editor.putInt(KEY_NOTE_YEAR+noteIndex, year);
+        editor.putInt(KEY_NOTE_MONTH+noteIndex, monthOfYear);
+        editor.putInt(KEY_NOTE_DAY+noteIndex, dayOfMonth);
+        editor.apply();
+    }
+
+
+    protected ImageNotes(Parcel in) {
+        noteIndex = in.readInt();
+    }
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeInt(getNoteIndex());
+    }
+
+    public int describeContents() {
+        return 0;
+    }
+
+    public static final Parcelable.Creator<ImageNotes> CREATOR = new Parcelable.Creator<ImageNotes>() {
+        @Override
+        public ImageNotes createFromParcel(Parcel in) {
+            return new ImageNotes(in);
         }
-    }
 
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_image_notes, container, false);
-        TextView textView = view.findViewById(R.id.text_of_notes);
-        TextView dateView = view.findViewById(R.id.date_of_notes);
+        @Override
+        public  ImageNotes[] newArray(int size) {
+            return new ImageNotes[size];
+        }
+    };
 
-        String [] textNote = getResources().getStringArray(R.array.textNotes);
-        String [] dateNote = getResources().getStringArray(R.array.dateNotes);
-        textView.setText(textNote[index]);
-        dateView.setText(dateNote[index]);
-        return view;
-    }
 }
