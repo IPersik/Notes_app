@@ -15,7 +15,6 @@ import androidx.fragment.app.Fragment;
 public class NoteDescriptionFragment extends Fragment {
 
     public static final String ARG_NOTE = "note";
-
     private ImageNotes imageNotes;
 
     public static NoteDescriptionFragment newInstance(ImageNotes imageNotes) {
@@ -36,7 +35,7 @@ public class NoteDescriptionFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_notes_list, container, false);
+        View view = inflater.inflate(R.layout.fragment_image_notes, container, false);
 
         TextView textViewName = view.findViewById(R.id.name_of_notes);
         TextView textViewBody = view.findViewById(R.id.text_of_notes);
