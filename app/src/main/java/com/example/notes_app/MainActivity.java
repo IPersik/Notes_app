@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.notes_app.databinding.ActivityMainBinding;
 import com.example.notes_app.ui.NoteFragment;
 import com.google.android.material.navigation.NavigationView;
 
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
 
     public static final String CURRENT_NOTE = "CurrentNote";
     public ImageNotes currentNote;
+    private ActivityMainBinding binding;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,11 +43,11 @@ public class MainActivity extends AppCompatActivity {
         if (getResources().getConfiguration().orientation == Configuration.ORIENTATION_PORTRAIT) {
             initView();
         }
+
         initToolbar();
 
-        addFragment(NoteFragment.newInstance());
-        //FragmentManager fragmentManager = getSupportFragmentManager();
-        //fragmentManager.beginTransaction().add(R.id.fragment_container, NoteFragment.newInstance()).commit() ;
+        FragmentManager fragmentManager = getSupportFragmentManager();
+        fragmentManager.beginTransaction().add(R.id.fragment_container, NoteFragment.newInstance()).commit() ;
     }
 
     private void initToolbar() {
@@ -83,18 +85,17 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Обработка выбора пункта меню приложения (активити)
         int id = item.getItemId();
 
         switch (id) {
             case R.id.action_favorite:
-                Toast.makeText(MainActivity.this, "Нажали 1 пункт меню", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Ищбранное", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_search:
-                Toast.makeText(MainActivity.this, "Нажали 2 пункт меню", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Поиск", Toast.LENGTH_SHORT).show();
                 return true;
             case R.id.action_customizations:
-                Toast.makeText(MainActivity.this, "Нажали 3 пункт меню", Toast.LENGTH_SHORT).show();
+                Toast.makeText(MainActivity.this, "Настрокий", Toast.LENGTH_SHORT).show();
                 return true;
         }
         return super.onOptionsItemSelected(item);
@@ -116,9 +117,9 @@ public class MainActivity extends AppCompatActivity {
         buttonNoteBody.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (currentNote != null) { // если у нас уже выбрана заметка, и нам есть что показать
+                if (currentNote != null) {
                     addFragment(NoteDescriptionFragment.newInstance(currentNote));
-                } else { // если нечего показать(не выбрана заметка), предупреждаем пользователя
+                } else {
                     Toast.makeText(getApplicationContext(), "Не выбрана ни одна заметка", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -139,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
     private void addFragment(Fragment fragment) {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
+        fragmentManager.beginTransaction().add(R.id.fragment_container, NoteFragment.newInstance()).commit() ;
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
