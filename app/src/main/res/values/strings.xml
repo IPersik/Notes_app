@@ -17,11 +17,11 @@
     <string name="user">Имя Фамилия</string>
     <string name="user_bd">Родился 00.00.0000</string>
     <string name="menu_1_txt">Боковое меню 1</string>
-    <string name="menu_2_txt">Боковое меню 2</string>
-    <string name="menu_3_txt">Боковое меню 3</string>
-    <string name="topmenu_1_txt">Меню 1</string>
-    <string name="topmenu_3_txt">Меню 3</string>
-    <string name="topmenu_2_txt">Меню 2</string>
+    <string name="favor">Избранное</string>
+    <string name="menu_custom">Поиск</string>
+    <string name="custom_txt">Настроки</string>
+    <string name="favot_text">Избранное</string>
+    <string name="search_txt">Поиск</string>
     <string name="date_text">Дата заметки</string>
     <string name="body_text">Текст заметки</string>
     <string name="note_name_text">Имя заметки</string>

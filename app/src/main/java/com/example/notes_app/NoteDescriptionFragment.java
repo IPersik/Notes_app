@@ -43,7 +43,6 @@ public class NoteDescriptionFragment extends Fragment {
         DatePicker datePicker = view.findViewById(R.id.datePicker);
         textViewName.setText(imageNotes.getNoteName(getContext()));
         textViewBody.setText(imageNotes.getNoteBody(getContext()));
-        // textViewDate.setText(new StringBuilder().append(imageNotes.getNoteDateYear(getContext())).append(" ").append(imageNotes.getNoteDateMonth(getContext())).append(" ").append(imageNotes.getNoteDateDay(getContext())).toString());
         textViewDate.setText(imageNotes.getNoteDateYear(getContext())+" "+ imageNotes.getNoteDateMonth(getContext())+" "+ imageNotes.getNoteDateDay(getContext()));
         datePicker.init(imageNotes.getNoteDateYear(getContext()), imageNotes.getNoteDateMonth(getContext()), imageNotes.getNoteDateDay(getContext()), new DatePicker.OnDateChangedListener() {
             @Override

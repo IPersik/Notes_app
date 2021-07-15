@@ -45,11 +45,15 @@ public class NotesListFragment extends Fragment {
     private void createTextViewList(View view) {
         LinearLayout linearView = (LinearLayout) view;
         String[] notes = getResources().getStringArray(R.array.nameNotes);
+        LayoutInflater layoutInflater = getLayoutInflater();
         for (int i = 0; i < notes.length; i++) {
-            TextView textView = new TextView(getContext());
-            textView.setText(notes[i]);
+            String note = notes[i];
+            View item = layoutInflater.inflate(R.layout.fragment_notes_list, linearView, false);
+            TextView textView = item.findViewById(R.id.textView);
+
+            textView.setText(note);
             textView.setTextSize(30);
-            linearView.addView(textView);
+            linearView.addView(item);
             final int finalI = i;
             textView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -60,6 +64,7 @@ public class NotesListFragment extends Fragment {
             });
         }
     }
+
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);

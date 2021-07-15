@@ -20,6 +20,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
+import com.example.notes_app.ui.NoteFragment;
 import com.google.android.material.navigation.NavigationView;
 
 
@@ -41,6 +42,10 @@ public class MainActivity extends AppCompatActivity {
             initView();
         }
         initToolbar();
+
+        addFragment(NoteFragment.newInstance());
+        //FragmentManager fragmentManager = getSupportFragmentManager();
+        //fragmentManager.beginTransaction().add(R.id.fragment_container, NoteFragment.newInstance()).commit() ;
     }
 
     private void initToolbar() {
@@ -135,6 +140,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fragmentManager = getSupportFragmentManager();
         FragmentTransaction fragmentTransaction = fragmentManager.beginTransaction();
         fragmentTransaction.replace(R.id.fragment_container, fragment);
+        fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
     }
 }
