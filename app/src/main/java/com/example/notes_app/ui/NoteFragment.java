@@ -66,6 +66,9 @@ public class NoteFragment extends Fragment {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.action_add:
+                data.addNote(new NoteData("Какая-то заметка" + (data.size()+1)));
+                noteAdapter.notifyItemInserted(data.size()-1);
+                recyclerView.scrollToPosition(data.size()-1);
                 return true;
             case R.id.action_clear:
                 data.clearNote();
