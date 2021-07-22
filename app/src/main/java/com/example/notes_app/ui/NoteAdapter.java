@@ -33,7 +33,6 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
     @Override
     public void onBindViewHolder(NoteViewHolder holder, int position) {
         holder.setData(dataSource.getNoteDate(position));
-        //holder.getTextView().setText(this.dataSource[position]);
     }
 
     @Override
@@ -59,9 +58,5 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         private void setData(NoteData noteData){
             title.setText(noteData.getTitle());
         }
-
-        /*public TextView getTextView() {
-            return title;
-        }*/
     }
 }
