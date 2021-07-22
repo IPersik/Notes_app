@@ -30,6 +30,8 @@
     <string name="customizations">Настройки</string>
     <string name="search">Поиск</string>
     <string name="favorite">Избранное</string>
+    <string name="add">Добавить</string>
+    <string name="clear">Очистить</string>
 
 
 </resources>

@@ -5,6 +5,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -47,8 +48,12 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         public NoteViewHolder(View itemView) {
             super(itemView);
             title = ((LinearLayout) itemView).findViewById(R.id.textView);
-
-
+            View.OnClickListener onClickListener = new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Toast.makeText(v.getContext(), ((TextView) v).getText(), Toast.LENGTH_SHORT);
+                }
+            };
         }
 
         private void setData(NoteData noteData){

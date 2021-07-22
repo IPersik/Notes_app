@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -40,31 +41,13 @@ public class NoteFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(getContext());
         recyclerView.setLayoutManager(layoutManager);
         NoteAdapter noteAdapter = new NoteAdapter(data);
+
+        View.OnClickListener onClickListener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(v.getContext(), ((TextView) v).getText(), Toast.LENGTH_SHORT);
+            }
+        };
         recyclerView.setAdapter(noteAdapter);
     }
-
-    //перенесено
-    /*private void createTextViewList(View view) {
-        LinearLayout linearView = (LinearLayout) view;
-        NoteSourceImpl notes = new NoteSourceImpl(getResources());
-        notes.init();
-        LayoutInflater layoutInflater = getLayoutInflater();
-        for (int i = 0; i < notes.size(); i++) {
-            String note = notes[i];
-            View item = layoutInflater.inflate(R.layout.fragment_notes_list, linearView, false);
-            TextView textView = item.findViewById(R.id.textView);
-
-            textView.setText(note);
-            textView.setTextSize(30);
-            linearView.addView(item);
-            final int finalI = i;
-           textView.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    ((MainActivity)getActivity()).currentNote = new ImageNotes(finalI);
-                    //showNoteDescription(((MainActivity)getActivity()).currentNote);
-                }
-            });
-        } */
-
 }
