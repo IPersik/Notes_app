@@ -9,13 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.notes_app.ImageNotes;
+import com.example.notes_app.MainActivity;
 import com.example.notes_app.R;
+import com.example.notes_app.data.NoteData;
+import com.example.notes_app.data.NoteSource;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 
-    private String[] dataSource;
+    private NoteSource dataSource;
 
-    public NoteAdapter(String[] dataSource) {
+    public NoteAdapter(NoteSource dataSource) {
         this.dataSource = dataSource;
     }
 
@@ -27,24 +31,32 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
 
     @Override
     public void onBindViewHolder(NoteViewHolder holder, int position) {
-        holder.getTextView().setText(this.dataSource[position]);
+        holder.setData(dataSource.getNoteDate(position));
+        //holder.getTextView().setText(this.dataSource[position]);
     }
 
     @Override
     public int getItemCount() {
-        return dataSource.length;
+        return dataSource.size();
     }
 
     public class NoteViewHolder extends RecyclerView.ViewHolder {
 
-        private TextView textView;
+        private TextView title;
 
         public NoteViewHolder(View itemView) {
             super(itemView);
-            textView = ((LinearLayout) itemView).findViewById(R.id.textView);
+            title = ((LinearLayout) itemView).findViewById(R.id.textView);
+
+
         }
-        public TextView getTextView() {
-            return textView;
+
+        private void setData(NoteData noteData){
+            title.setText(noteData.getTitle());
         }
+
+        /*public TextView getTextView() {
+            return title;
+        }*/
     }
 }

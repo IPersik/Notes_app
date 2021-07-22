@@ -132,7 +132,7 @@ public class MainActivity extends AppCompatActivity {
         buttonNoteList.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                addFragment(new NotesListFragment());
+                addFragment(new NoteFragment());
             }
         });
     }
