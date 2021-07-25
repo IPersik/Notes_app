@@ -3,25 +3,35 @@ package com.example.notes_app.ui;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.notes_app.ImageNotes;
-import com.example.notes_app.MainActivity;
 import com.example.notes_app.R;
 import com.example.notes_app.data.NoteData;
 import com.example.notes_app.data.NoteSource;
 
 public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder> {
 
+
+    private final static String TAG = "NoteAdapter";
+    private NoteSource noteSource;
+    private final Fragment fragment;
+    private AdapterView.OnItemClickListener itemClickListener;  // Слушатель будет устанавливаться извне
+    private int menuPosition;
     private NoteSource dataSource;
 
-    public NoteAdapter(NoteSource dataSource) {
-        this.dataSource = dataSource;
+    public NoteAdapter(NoteSource noteSource, Fragment fragment){
+        this.noteSource = dataSource;
+        this.fragment = fragment;
+    }
+
+    public NoteAdapter(Fragment fragment) {
+        this.fragment = fragment;
     }
 
     @Override
@@ -35,10 +45,30 @@ public class NoteAdapter extends RecyclerView.Adapter<NoteAdapter.NoteViewHolder
         holder.setData(dataSource.getNoteDate(position));
     }
 
+    public void setDataSource(NoteSource dataSource) {
+        this.dataSource = dataSource;
+        notifyDataSetChanged();
+    }
+
     @Override
     public int getItemCount() {
         return dataSource.size();
     }
+
+    //new
+    public void SetOnItemClickListener(AdapterView.OnItemClickListener itemClickListener){
+        this.itemClickListener = itemClickListener;
+    }
+
+    public int getMenuPosition() {
+        return menuPosition;
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(View view , int position);
+    }
+
+    //
 
     public class NoteViewHolder extends RecyclerView.ViewHolder {
 

@@ -7,21 +7,30 @@ import com.example.notes_app.R;
 import java.util.ArrayList;
 import java.util.List;
 
-public class NoteSourceImpl implements NoteSource {
+public class NoteSourceIResponseImpl implements NoteSource {
     private List<NoteData> noteSource;
     private Resources resources;
 
-    public NoteSourceImpl(Resources resources) {
+    public NoteSourceIResponseImpl(Resources resources) {
         this.resources = resources;
         noteSource = new ArrayList<>();
     }
 
-    public void init() {
+    public NoteSourceIResponseImpl init(NoteSourceResponse noteSourceResponse) {
         String[] titles = resources.getStringArray(R.array.nameNotes);
         for (int i = 0; i < titles.length; i++) {
             noteSource.add(new NoteData(titles[i]));
         }
+        if (noteSourceResponse != null){
+            noteSourceResponse.initialized(this);
+        }
+        return this;
     }
+
+    /*@Override
+    public NoteSource init(NoteSourceResponse noteSourceResponse) {
+        return null;
+    }*/
 
     @Override
     public int size() {

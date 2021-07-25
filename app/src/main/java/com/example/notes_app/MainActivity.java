@@ -21,8 +21,10 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.notes_app.databinding.ActivityMainBinding;
+import com.example.notes_app.observe.Publisher;
 import com.example.notes_app.ui.NoteFragment;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.firestore.FirebaseFirestore;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -30,6 +32,8 @@ public class MainActivity extends AppCompatActivity {
     public static final String CURRENT_NOTE = "CurrentNote";
     public ImageNotes currentNote;
     private ActivityMainBinding binding;
+    private Publisher publisher = new Publisher();
+    Navigation navigation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,6 +50,7 @@ public class MainActivity extends AppCompatActivity {
 
         initToolbar();
 
+        getNavigation().addFragment(NoteFragment.newInstance(), false);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction().add(R.id.fragment_container, NoteFragment.newInstance()).commit() ;
     }
@@ -75,12 +80,6 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
     }
 
     @Override
@@ -144,5 +143,13 @@ public class MainActivity extends AppCompatActivity {
         fragmentTransaction.replace(R.id.fragment_container, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    public Publisher getPublisher(){
+        return publisher;
+    }
+
+    public Navigation getNavigation() {
+        return navigation;
     }
 }
